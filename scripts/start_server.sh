@@ -13,7 +13,7 @@ fi
 
 if command -v docker >/dev/null 2>&1; then
   echo "[whisper-dictation] Démarrage du conteneur watch-speaches..."
-  docker start watch-speaches || /home/florian/mes_projets/claude-skills/local-whisper/speaches-up.sh
+  docker start watch-speaches || /home/florian/mes_projets/outils/productivite/Mes-Skills/services/local-whisper/speaches-up.sh
 else
   echo "[whisper-dictation] ERREUR : Docker introuvable." >&2
   exit 1

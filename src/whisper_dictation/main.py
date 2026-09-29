@@ -49,10 +49,14 @@ def acquire_single_instance_lock() -> bool:
         return True
 
     ERROR_ALREADY_EXISTS = 183
-    _global_mutex = ctypes.windll.kernel32.CreateMutexW(None, False, "WhisperDictationUserSessionMutex")
+    _global_mutex = ctypes.windll.kernel32.CreateMutexW(
+        None, False, "WhisperDictationUserSessionMutex"
+    )
     last_error = ctypes.windll.kernel32.GetLastError()
     if last_error == ERROR_ALREADY_EXISTS:
-        logger.warning("Une autre instance de whisper-dictation est déjà en cours d'exécution. Arrêt du doublon.")
+        logger.warning(
+            "Une autre instance de whisper-dictation est déjà en cours d'exécution. Arrêt du doublon."
+        )
         return False
     return True
 
@@ -105,7 +109,9 @@ class DictationApp:
                     text = self.client.transcribe(wav_bytes)
                 except WhisperServerUnavailable:
                     if self.client.check_health():
-                        logger.info("Serveur en ligne (simple coupure de socket), tentative immédiate...")
+                        logger.info(
+                            "Serveur en ligne (simple coupure de socket), tentative immédiate..."
+                        )
                         text = self.client.transcribe(wav_bytes)
                     else:
                         logger.info("Serveur indisponible, tentative de réveil automatique...")
@@ -116,7 +122,7 @@ class DictationApp:
                                 "Ubuntu-24.04",
                                 "--",
                                 "bash",
-                                "/home/florian/mes_projets/whisper-dictation/scripts/start_server.sh",
+                                "/home/florian/mes_projets/outils/productivite/Outil-Dictee-Audio/scripts/start_server.sh",
                             ],
                             creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
                             timeout=15,
@@ -126,7 +132,7 @@ class DictationApp:
                         text = self.client.transcribe(wav_bytes)
 
                 if text:
-                    print(f">>> TRANSCRIPTION : \"{text}\" -> Collage...")
+                    print(f'>>> TRANSCRIPTION : "{text}" -> Collage...')
                     self.injector.paste_text(text)
                     self.feedback.beep_success()
                     print(">>> TERMINE !\n")

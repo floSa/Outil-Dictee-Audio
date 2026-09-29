@@ -20,11 +20,22 @@ WM_QUIT = 0x0012
 
 # Mapping des touches courantes vers les Virtual Key Codes
 VK_MAP = {
-    "f1": 0x70, "f2": 0x71, "f3": 0x72, "f4": 0x73,
-    "f5": 0x74, "f6": 0x75, "f7": 0x76, "f8": 0x77,
-    "f9": 0x78, "f10": 0x79, "f11": 0x7A, "f12": 0x7B,
-    "space": 0x20, "espace": 0x20,
-    "insert": 0x2D, "pause": 0x13,
+    "f1": 0x70,
+    "f2": 0x71,
+    "f3": 0x72,
+    "f4": 0x73,
+    "f5": 0x74,
+    "f6": 0x75,
+    "f7": 0x76,
+    "f8": 0x77,
+    "f9": 0x78,
+    "f10": 0x79,
+    "f11": 0x7A,
+    "f12": 0x7B,
+    "space": 0x20,
+    "espace": 0x20,
+    "insert": 0x2D,
+    "pause": 0x13,
 }
 for c in "abcdefghijklmnopqrstuvwxyz":
     VK_MAP[c] = ord(c.upper())
@@ -83,7 +94,9 @@ class Win32GlobalHotKey:
             return True
         else:
             err = self.kernel32.GetLastError()
-            logger.warning("Échec de l'enregistrement du raccourci '%s' (Erreur Win32 : %d)", hotkey_str, err)
+            logger.warning(
+                "Échec de l'enregistrement du raccourci '%s' (Erreur Win32 : %d)", hotkey_str, err
+            )
             return False
 
     def listen_loop(self) -> None:

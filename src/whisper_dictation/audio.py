@@ -24,7 +24,9 @@ class AudioRecorder:
         """Indique si un enregistrement est actif."""
         return self._is_recording
 
-    def _audio_callback(self, indata: np.ndarray, frames: int, time_info: dict, status: int) -> None:
+    def _audio_callback(
+        self, indata: np.ndarray, frames: int, time_info: dict, status: int
+    ) -> None:
         """Callback appelé par sounddevice pour chaque paquet audio."""
         if status:
             logger.warning("Statut flux audio : %s", status)
